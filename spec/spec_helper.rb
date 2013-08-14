@@ -9,6 +9,6 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   config.before(:each) do
-    @api = ApiWrapperFor8x8::Connection.new({:api_un => ENV['PHONE_SYSTEM_UN'], :api_token => ENV['PHONE_SYSTEM_TOKEN']})
+    @api = ApiWrapperFor8x8::Connection.new({:username => ENV['PHONE_SYSTEM_UN'], :password => ENV['PHONE_SYSTEM_TOKEN']})
   end
 end

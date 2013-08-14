@@ -3,7 +3,8 @@ require 'httparty'
 module ApiWrapperFor8x8
   class Connection
     include HTTParty
-    base_uri ENV['PHONE_SYSTEM_URL']
+
+    base_uri "#{ENV['PHONE_SYSTEM_URL']}"
     format :json
 
     def initialize(creds={})
@@ -14,7 +15,8 @@ module ApiWrapperFor8x8
     end
 
     def request(method, url, options={})
-      raise "Please set api_token" unless api_token_keys_valid?
+      raise "Please set usranme and password" unless api_token_keys_valid?
+      options[:basic_auth] = @configuration
       self.class.__send__(method, url, options)
     end
 
@@ -26,8 +28,11 @@ module ApiWrapperFor8x8
       [:username, :password].freeze
     end
 
-    def get(url)
-      request('get', url)
+    def get(url, params={}, headers={})
+      unless params.empty?
+        url = "#{url}?#{params.sort.map {|param| URI.escape("#{params[0]}=#{param[1]}")}.join('&')}"
+      end
+      request(:get, url, headers)
     end
   end
 end

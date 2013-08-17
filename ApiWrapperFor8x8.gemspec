@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ApiWrapperFor8x8/version'
+require File.expand_path('../lib/ApiWrapperFor8x8/version', __FILE__)
 
 Gem::Specification.new do |spec|
   spec.name          = "ApiWrapperFor8x8"
   spec.version       = ApiWrapperFor8x8::VERSION
   spec.authors       = ["daifu"]
   spec.email         = ["daifu.ye@gmail.com"]
-  spec.description   = %q{8x8 Phone System api wrapper}
+  spec.description   = %q{8x8 Phone System api wrapper to handle reporting.}
   spec.summary       = %q{8x8 Phone System api wrapper}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/daifu/api-wrapper-for-8x8"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -23,7 +23,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", ">= 2.11.0"
   spec.add_development_dependency "debugger"
 
-  spec.add_dependency "bundler", ">= 1.0.0"
+  spec.add_dependency "bundler" , ">= 1.0.0"
   spec.add_dependency "httparty", ">= 0.9.0"
+  spec.add_dependency "json"    , "~> 1.8.0"
 
 end

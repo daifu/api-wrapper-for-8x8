@@ -4,6 +4,8 @@ module ApiWrapperFor8x8
   class Connection
     include HTTParty
 
+    include ApiWrapperFor8x8::Channel
+
     base_uri "#{ENV['PHONE_SYSTEM_URL']}"
     format :json
 

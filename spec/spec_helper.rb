@@ -3,7 +3,7 @@ require 'rspec'
 require 'bundler/setup'
 require 'rspec/expectations'
 
-require_relative '../lib/ApiWrapperFor8x8/connection.rb'
+Dir[File.dirname(__FILE__)+'/../lib/ApiWrapperFor8x8/*.rb'].each{|file| require file}
 
 RSpec.configure do |config|
   config.mock_with :rspec

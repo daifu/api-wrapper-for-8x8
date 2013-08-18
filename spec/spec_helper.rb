@@ -2,6 +2,8 @@ require 'rubygems'
 require 'rspec'
 require 'bundler/setup'
 require 'rspec/expectations'
+require 'httparty'
+require 'json'
 
 Dir[File.dirname(__FILE__)+'/../lib/ApiWrapperFor8x8/*.rb'].each{|file| require file}
 

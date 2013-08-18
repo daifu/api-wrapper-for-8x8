@@ -4,7 +4,7 @@ describe ApiWrapperFor8x8::Connection do
   before do
     @net_http_response = Net::HTTPOK.new('1.1', 200, 'OK')
     @net_http_response.stub(:body => '')
-    @httparty_response = stub("HTTPartyResponse", :parsed_response => nil, :body => '', :success? => true)
+    @httparty_response = double("HTTPartyResponse", :parsed_response => nil, :body => '', :success? => true)
   end
   describe "GET" do
     describe "connection method" do
@@ -19,8 +19,8 @@ describe ApiWrapperFor8x8::Connection do
     end
 
     it "should get /stats/agents.json" do
-      @api.stub(:request => @net_http_response)
-      @api.get('/stats/agents.json').should == @net_http_response
+      @api.should_receive(:request).with(:get, "/stats/agents.json", {}).and_return(@net_http_response)
+      @api.get('/stats/agents.json')
     end
 
   end

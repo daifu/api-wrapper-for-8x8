@@ -1,5 +1,3 @@
-require 'httparty'
-
 module ApiWrapperFor8x8
   class Connection
     include HTTParty

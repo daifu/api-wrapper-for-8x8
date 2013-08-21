@@ -22,7 +22,7 @@ module ApiWrapperFor8x8
       tries   = 1
       begin
         details_tmp = get("/stats/channels/#{guid}/statistics.json", params_options)
-        details << details_tmp['statistics']['statistic'] if details_tmp
+        details.concat(get_stat(details_tmp)) if details_tmp
         details = filter(details, filter_options) if filter_options.size > 0
         tries += 1
       end while size_of(details_tmp) >= RECORDS_LIMIT &&
@@ -30,14 +30,43 @@ module ApiWrapperFor8x8
       details
     end
 
-    def filter(details, criteria)
-      details.map do |detail|
+    # It is easier for geting the sum of a value from the
+    # an array of records with the restriction you can set
+    def channel_sum_x(x, restriction={},  guid=0,  params_options={}, filter_options=[])
+      details = channel_details(guid, params_options, filter_options)
+      details = restrict(details, restriction) if restriction.size > 0
+      sum = details.map {|detail| detail[x]}.inject(:+) if details
+      sum || 0
+    end
+
+    private
+    def restrict(details, restriction)
+      details.select do |detail|
+        flag = true
+        restriction.each do |key, value|
+          if detail[key] != value
+            flag = false
+          end
+        end
+        flag
       end
+    end
+
+    def filter(details, criteria)
+      details.each do |detail|
+        detail.select! { |key, value| criteria.include?(key) }
+      end
+      details
     end
 
     def size_of(details)
       details ||= []
       details.size
+    end
+
+    def get_stat(resp)
+      # can be cahnged based on the api
+      resp['statistics']['statistic']
     end
 
   end

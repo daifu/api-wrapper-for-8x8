@@ -31,6 +31,8 @@ describe ApiWrapperFor8x8::Agents do
     it "should filter agents with enabled" do
       @api.filtered_agents(@agent_lists, {"enabled" => "Y"}).should == [@agent1]
       @api.filtered_agents(@agent_lists, {"enabled" => "D"}).should == [@agent2]
+      @api.filtered_agents(@agent_lists, {"enabled" => "D", "agent-id" => 'b'}).should == [@agent2]
+      @api.filtered_agents(@agent_lists, {"enabled" => "Y", "agent-id" => 'b'}).should == []
     end
   end
 end

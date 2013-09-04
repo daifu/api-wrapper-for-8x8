@@ -16,7 +16,7 @@ module ApiWrapperFor8x8
 
     def filtered_agents(agent_list, filtered_options)
       if filtered_options.size == 0
-        return list
+        return agent_list
       end
       agent_list.select do |agent|
         flag = true

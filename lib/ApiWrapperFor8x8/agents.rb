@@ -8,7 +8,7 @@ module ApiWrapperFor8x8
 
     def agents_detail(params={}, filtered_options={})
       details = []
-      filtered_agents(agent_list(params), filtered_options).each do |agent|
+      filtered_agents(agent_list, filtered_options).each do |agent|
         details << agent_detail(agent['agent-id'], params)
       end
       details.flatten

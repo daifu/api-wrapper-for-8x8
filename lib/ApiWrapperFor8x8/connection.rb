@@ -4,12 +4,13 @@ module ApiWrapperFor8x8
 
     include ApiWrapperFor8x8::Channel
     include ApiWrapperFor8x8::Agents
+    include ApiWrapperFor8x8::Stats
 
     RECORDS_LIMIT = 50
     MAX_TRY       = 3
     VALID_SEGMENT = ['channels', 'agents', 'statistics']
 
-    base_uri "#{ENV['PHONE_SYSTEM_URL']}"
+    base_uri "https://na3.mycontactual.com/api"
     format :json
 
     def initialize(creds={})

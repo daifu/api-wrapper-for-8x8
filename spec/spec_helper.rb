@@ -5,6 +5,7 @@ require 'rspec/expectations'
 require 'httparty'
 require 'json'
 
+require_relative '../lib/ApiWrapperFor8x8/stats.rb'
 Dir[File.dirname(__FILE__)+'/../lib/ApiWrapperFor8x8/*.rb'].each{|file| require file}
 
 RSpec.configure do |config|

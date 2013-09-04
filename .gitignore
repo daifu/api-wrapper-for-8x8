@@ -19,3 +19,4 @@ ctags
 __Tagbar__
 tags
 Makefile
+spec/fixture/*

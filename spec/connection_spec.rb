@@ -81,12 +81,11 @@ describe ApiWrapperFor8x8::Connection do
       end
     end
 
-
-    it "should get /stats/agents.json" do
-      url = "/stats/agents.json"
-      @api.should_receive(:get_stat).with(@httparty_response, url).and_return([{}])
-      @api.should_receive(:request).with(:get, url, {}).and_return(@httparty_response)
-      @api.get(url)
+    describe "base_uri" do
+      it "should not be empty or nil" do
+        ApiWrapperFor8x8::Connection::base_uri.should_not be_nil
+        ApiWrapperFor8x8::Connection::base_uri.size.should_not be_zero
+      end
     end
 
   end

@@ -25,7 +25,7 @@ Or install it yourself as:
     :username => 'foo', # your username for 8x8
     :password => 'bar'  # your password for 8x8
 })
-```ruby
+```
 
 ###Params for each call
 Date range: it has to be a iso8601 format and a string with comma separated, Ex "#{(Time.now-3600*24).iso8601,Time.now.iso8601}"

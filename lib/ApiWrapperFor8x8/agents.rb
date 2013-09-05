@@ -2,30 +2,24 @@ module ApiWrapperFor8x8
   module Agents
     include ApiWrapperFor8x8::Agent
 
-    def agent_list(params={})
-      get('/stats/agents.json', params)
+    # Get a list of all the agents
+    #
+    def agent_list(filtered_options={})
+      get('/stats/agents.json', {}, filtered_options)
     end
 
+    # Get all the details of agents
+    #
+    # Ex. Get details for date range of '2013-09-04T00:00:00-07:00,2013-09-04T23:59:59-07:00'
+    # and filtered with queue-name and agent-id
+    # @api_connection.agents_detail({:d => '2013-09-04T00:00:00-07:00,2013-09-04T23:59:59-07:00'},
+    #                               {"agent-id"=>"foo", "queue-name"=>"bar"})
     def agents_detail(params={}, filtered_options={})
       details = []
-      filtered_agents(agent_list, filtered_options).each do |agent|
-        details << agent_detail(agent['agent-id'], params)
+      agent_list.each do |agent|
+        details.concat(agent_detail(agent['agent-id'], params, filtered_options))
       end
-      details.flatten
+      details
     end
-
-    def filtered_agents(agent_list, filtered_options)
-      if filtered_options.size == 0
-        return agent_list
-      end
-      agent_list.select do |agent|
-        flag = true
-        filtered_options.each do |key, value|
-          flag = false unless (agent[key] && agent[key] == value)
-        end
-        flag
-      end
-    end
-
   end
 end

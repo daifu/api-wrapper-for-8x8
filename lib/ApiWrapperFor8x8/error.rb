@@ -15,6 +15,8 @@ module ApiWrapperFor8x8
     def common_solutions
       if @response.code.to_i == 401
         "Check your credentials and make sure they are correct and not expired"
+      elsif @response.code.to_i >= 500 && @response.code.to_i < 600
+        "Check the format of your json"
       end
     end
 

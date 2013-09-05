@@ -8,7 +8,7 @@ describe ApiWrapperFor8x8::Channel do
 
   describe "channel_list" do
     it "should GET /stats/channels.json" do
-      @api.should_receive(:get).with('/stats/channels.json', {})
+      @api.should_receive(:get).with('/stats/channels.json', {}, {})
       @api.channel_list
     end
 

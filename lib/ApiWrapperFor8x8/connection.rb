@@ -21,9 +21,11 @@ module ApiWrapperFor8x8
     end
 
     def request(method, url, options={})
-      raise "Please set usranme and password" unless api_token_keys_valid?
+      unless api_token_keys_valid?
+        raise ApiWrapperFor8x8::ResponseError.new(nil, "Please set username and password correctly")
+      end
       options[:basic_auth] = @configuration
-      self.class.__send__(method, url, options).parsed_response
+      parsed_response(self.class.__send__(method, url, options))
     end
 
     def api_token_keys_valid?
@@ -92,6 +94,20 @@ module ApiWrapperFor8x8
           flag = false unless (ele[key] && ele[key] == value)
         end
         flag
+      end
+    end
+
+    def parsed_response(response)
+      if response.is_a? Net::HTTPResponse
+        unless response.is_a? Net::HTTPSuccess
+          raise ApiWrapperFor8x8::ResponseError.new(response)
+        end
+        JSON.parse(response.body)
+      else
+        unless response.success?
+          raise ApiWrapperFor8x8::ResponseError.new(response)
+        end
+        response.parsed_response
       end
     end
   end

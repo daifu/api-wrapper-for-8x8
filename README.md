@@ -19,7 +19,36 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+###Setup
+```ruby
+@api_connection = ApiWrapperFor8x8::Connection.new({
+    :username => 'foo', # your username for 8x8
+    :password => 'bar'  # your password for 8x8
+})
+```ruby
+
+###Params for each call
+Date range: it has to be a iso8601 format and a string with comma separated, Ex "#{(Time.now-3600*24).iso8601,Time.now.iso8601}"
+Timezone: it need to be following: list_of_timezone[http://en.wikipedia.org/wiki/List_of_zoneinfo_time_zones], Ex. America/Los_Angeles
+It has more params, which can be seen on 8x8 site[http://www.8x8.com/Support/BusinessSupport/Documentation/VirtualContactCenterDocumentation/VirtualContactCenterStats.aspx]
+
+###Channel
+
+Get a list of channels
+```ruby
+@api_coonection.channel_list
+```
+
+Get a list of agnets
+```ruby
+@api_coonection.agent_list
+```
+
+Get a list of agnet details
+```ruby
+@api_coonection.agents_details({:d => 'YOUR DATE RANGE', :tz => 'YOUR TIMEZONE'}, {FILTER OPTIONS})
+```
+
 
 ## Contributing
 

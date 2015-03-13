@@ -10,19 +10,26 @@ module ApiWrapperFor8x8
     MAX_TRY       = 3
     VALID_SEGMENT = ['channels', 'agents', 'statistics']
 
-    base_uri "https://na3.mycontactual.com/api"
+    API_URI_REGEX = /^https?:\/\/.+\.(mycontactual|8x8).com\/api/
+
+    DEFAULT_BASE_URI = "https://na3.mycontactual.com/api"
+
     format :json
 
-    def initialize(creds={})
+    def initialize(creds={}, api_uri = DEFAULT_BASE_URI)
       @configuration = {}
       ApiWrapperFor8x8::Connection.api_token_keys.each do |key|
         @configuration[key] = creds[key].to_s
       end
+      self.class.base_uri api_uri
     end
 
     def request(method, url, options={})
       unless api_token_keys_valid?
         raise ApiWrapperFor8x8::ResponseError.new(nil, "Please set username and password correctly")
+      end
+      unless api_uri_valid?
+        raise ApiWrapperFor8x8::ResponseError.new(nil, "Please set a valid API destination")
       end
       options[:basic_auth] = @configuration
       parsed_response(self.class.__send__(method, url, options))
@@ -30,6 +37,10 @@ module ApiWrapperFor8x8
 
     def api_token_keys_valid?
       return ApiWrapperFor8x8::Connection.api_token_keys.detect {|key| @configuration[key] == ''} == nil
+    end
+
+    def api_uri_valid?
+      return self.class.base_uri.match(API_URI_REGEX).present?
     end
 
     def self.api_token_keys

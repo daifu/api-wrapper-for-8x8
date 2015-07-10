@@ -86,6 +86,19 @@ describe ApiWrapperFor8x8::Connection do
         ApiWrapperFor8x8::Connection::base_uri.should_not be_nil
         ApiWrapperFor8x8::Connection::base_uri.size.should_not be_zero
       end
+
+      it "should resemble a Contactual/8x8 API address" do
+        "https://naX.mycontactual.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should_not be_nil
+        "http://vcc-naX.8x8.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should_not be_nil
+        "https://vcc-naX.8x8.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should_not be_nil
+        "https://vcc-naX.not8x8.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+        "https://naX.notmycontactual.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+        "vcc-naX.8x8.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+        "https://www.someother.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+        "ftp://vcc-naX.8x8.com/api".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+        "http://vcc-naX.8x8.com/".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+        "https://vcc-naX.8x8.com".match(ApiWrapperFor8x8::Connection::API_URI_REGEX).should be_nil
+      end
     end
 
   end

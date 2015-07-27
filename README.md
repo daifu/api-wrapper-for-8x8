@@ -1,7 +1,6 @@
-# Api Wrapper For 8x8 phonesystem reporting api
+# A Ruby interface to the 8x8 phone system reporting API
 
-Since 8x8 phone system api suck, and here is the ruby gem that act as the
-api wrapper to make your life a little bit easier.
+This is the ruby gem encapsulate the 8x8 phone system reporting API, and it makes people easier to intergate 8x8 phone system into their Ruby projects.
 
 ## Installation
 
